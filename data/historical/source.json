@@ -1,0 +1,11 @@
+{
+  "provider": "Cboe DataShop",
+  "source_url": "https://datashop.cboe.com/download/sample/217",
+  "product_url": "https://datashop.cboe.com/option-eod-summary",
+  "retrieved_utc": "2026-09-14T13:01:26.842076+00:00",
+  "quote_date": "2023-08-25",
+  "file": "UnderlyingOptionsEODCalcs_2023-08-25_cgi_or_historical.csv",
+  "sha256": "1732795c0b38ad0dec0f66dff30e2de4dbbd41423a375f6a166a137319e74dd7",
+  "archive_sha256": "981be1aafe6970e798d5be42f049e6c5b6e507f01cb1509ab513e9bc2e08da24",
+  "scope": "Provider demonstration sample; may contain a subset of actual data."
+}

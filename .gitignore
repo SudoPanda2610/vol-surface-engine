@@ -1,0 +1,9 @@
+venv/
+build/
+output/
+__pycache__/
+*.pyc
+*.so
+data/historical/*.csv
+data/historical/CBOE_SAMPLE_README.txt
+INTERVIEW_PREP_3H.md
