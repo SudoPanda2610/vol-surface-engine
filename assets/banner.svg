@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="220" viewBox="0 0 1200 220" role="img" aria-labelledby="title desc">
+  <title id="title">Volatility Surface Engine</title>
+  <desc id="desc">SVI calibration, local volatility, and barrier pricing</desc>
+  <style>
+    .title { fill: #111827; font: 600 48px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 1px; }
+    .subtitle { fill: #475569; font: 400 21px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 0.4px; }
+    .rule { stroke: #2563eb; stroke-width: 3; }
+    @media (prefers-color-scheme: dark) {
+      .title { fill: #f8fafc; }
+      .subtitle { fill: #cbd5e1; }
+      .rule { stroke: #60a5fa; }
+    }
+  </style>
+  <line class="rule" x1="330" y1="52" x2="870" y2="52"/>
+  <text class="title" x="600" y="120" text-anchor="middle">Volatility Surface Engine</text>
+  <text class="subtitle" x="600" y="160" text-anchor="middle">SVI calibration, local volatility, and barrier pricing</text>
+  <line class="rule" x1="330" y1="187" x2="870" y2="187"/>
+</svg>
