@@ -1,8 +1,10 @@
+![Volatility Surface Engine banner](assets/banner.svg)
+
 # Volatility surface and barrier pricing
 
 Fit implied-volatility smiles with SVI, screen their shape, construct local volatility, and price a down-and-out option in C++ through pybind11. A Python Monte Carlo implementation provides a second numerical method. The original demonstrations use synthetic quotes; a separate historical runner reads a Cboe SPXW sample dated 25 August 2023.
 
-Start with [the four-hour study guide](STUDY_GUIDE.md) and the commented `learn.py`. The guide includes 12 interview questions and a known-answer-to-local-vol learning sequence.
+Start with [the study guide](STUDY_GUIDE.md) and the commented `learn.py`. The guide develops the model from known-answer checks through local-volatility construction and barrier pricing.
 
 ```bash
 venv/bin/python learn.py
