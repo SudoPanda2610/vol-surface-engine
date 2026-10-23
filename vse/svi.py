@@ -130,13 +130,13 @@ def calibrate_slice_unconstrained(k, w_mkt, x0=None, robust=False):
     """Fit quotes with parameter bounds only; a small SSE is not a safety check."""
     if x0 is None:
         x0 = _initial_guess(k, w_mkt)
-    scale = max(float(np.sum(w_mkt*w_mkt)),1e-12) if robust else 1.
-    options = {'maxiter':1500,'ftol':1e-12,'gtol':1e-8} if robust else {'maxiter':500}
+    scale = max(float(np.sum(w_mkt * w_mkt)), 1e-12) if robust else 1.
+    options = {"maxiter": 1500, "ftol": 1e-12, "gtol": 1e-8} if robust else {"maxiter": 500}
     res = minimize(lambda p: np.sum((svi_total_variance(k, p) - w_mkt)**2)/scale,
                    x0, method="L-BFGS-B", bounds=_BOUNDS, options=options)
     if not res.success or not np.isfinite(res.fun):
         raise RuntimeError(f"SVI least-squares fit failed: {res.message}")
-    return res.x, float(np.sum((svi_total_variance(k,res.x)-w_mkt)**2))
+    return res.x, float(np.sum((svi_total_variance(k, res.x) - w_mkt) ** 2))
 
 
 def calibrate_slice_arbitrage_free(k, w_mkt, F_this, T_this, prev_slice=None,
@@ -189,8 +189,8 @@ def calibrate_slice_arbitrage_free(k, w_mkt, F_this, T_this, prev_slice=None,
             return np.array([minimum-b*sigma*np.sqrt(1-rho*rho), b, rho, m, sigma])
 
         def pack(p):
-            a,b,rho,m,sigma = p
-            return np.array([max(a+b*sigma*np.sqrt(1-rho*rho),1e-7),b,rho,m,sigma])
+            a, b, rho, m, sigma = p
+            return np.array([max(a + b * sigma * np.sqrt(1 - rho * rho), 1e-7), b, rho, m, sigma])
 
         def safe_margins(z):
             p = unpack(z)
@@ -206,13 +206,13 @@ def calibrate_slice_arbitrage_free(k, w_mkt, F_this, T_this, prev_slice=None,
             candidates.append((res.x,float(res.fun)))
         messages = [str(res.message)]
         for start in starts:
-            trial = minimize(lambda z: np.mean((svi_total_variance(k,unpack(z))-w_mkt)**2)/scale,
-                             start, method='SLSQP', bounds=bounds,
-                             constraints=[{'type':'ineq','fun':safe_margins}],
-                             options={'maxiter':1500,'ftol':1e-11})
+            trial = minimize(lambda z: np.mean((svi_total_variance(k, unpack(z)) - w_mkt) ** 2) / scale,
+                             start, method="SLSQP", bounds=bounds,
+                             constraints=[{"type": "ineq", "fun": safe_margins}],
+                             options={"maxiter": 1500, "ftol": 1e-11})
             p = unpack(trial.x)
             if trial.success and np.all(np.isfinite(p)) and np.min(safe_margins(trial.x)) >= -1e-7:
-                candidates.append((p,float(np.sum((svi_total_variance(k,p)-w_mkt)**2))))
+                candidates.append((p, float(np.sum((svi_total_variance(k, p) - w_mkt) ** 2))))
             messages.append(str(trial.message))
         if not candidates:
             raise RuntimeError(f"Constrained SVI fit failed: {'; '.join(messages)}")
@@ -227,9 +227,9 @@ def calibrate_surface(chain, arbitrage_free=True, robust=False):
         w_mkt = s["iv_mid"]**2 * s["T"]
         try:
             if arbitrage_free:
-                params, sse = calibrate_slice_arbitrage_free(s["k"], w_mkt, s["F"], s["T"], prev,robust=robust)
+                params, sse = calibrate_slice_arbitrage_free(s["k"], w_mkt, s["F"], s["T"], prev, robust=robust)
             else:
-                params, sse = calibrate_slice_unconstrained(s["k"], w_mkt,robust=robust)
+                params, sse = calibrate_slice_unconstrained(s["k"], w_mkt, robust=robust)
         except RuntimeError as exc:
             raise RuntimeError(f"T={s['T']}: {exc}") from exc
         clean_bf, min_g, _ = check_butterfly_arbitrage(params, n=2400, tol=-1e-7)
